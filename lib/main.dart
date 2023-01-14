@@ -32,33 +32,27 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            shareButton(
-              'テキストシェア',
-              () {
+            ElevatedButton(
+              child: const Text('テキストシェア'),
+              onPressed: () {
+                const defaultText = 'デフォルトテキスト';
+                const url = 'https://pentagon.tokyo/';
+
                 Share.share(
-                  'テキストシェア',
+                  '$defaultText \n $url',
                   subject: 'subject',
                 );
               },
             ),
-            shareButton(
-              'テキストシェア(リンク付き)',
-              () {
-                Share.share(
-                  'テキストシェア(リンク付き)\nhttps://pentagon.tokyo/',
-                  subject: 'subject',
-                );
-              },
-            ),
-            shareButton(
-              '単独画像シェア',
-              () async {
+            ElevatedButton(
+              child: const Text('画像シェア'),
+              onPressed: () async {
                 //画像のパス。今回はAssets内の画像を使用します
                 const imagePath = 'assets/images/pentagon.png';
 
-                //Assetsの画像を使用する際に必要となります
-                final data = await rootBundle.load(imagePath);
-                final buffer = data.buffer;
+                //画像のパスを元に、最終的にunit8list型の変数を作ります
+                final ByteData data = await rootBundle.load(imagePath);
+                final ByteBuffer buffer = data.buffer;
                 final Uint8List uint8list =
                     buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
@@ -69,24 +63,6 @@ class MyHomePage extends StatelessWidget {
                 );
                 await Share.shareXFiles(
                   [xFile],
-                  subject: 'subject',
-                  text: 'text',
-                );
-              },
-            ),
-            shareButton(
-              '複数画像シェア',
-              () async {
-                const imagePath = 'assets/images/pentagon.png';
-                final data = await rootBundle.load(imagePath);
-                final buffer = data.buffer;
-                final xFile = XFile.fromData(
-                  buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
-                  name: 'flutter_logo.png',
-                  mimeType: 'image/png',
-                );
-                await Share.shareXFiles(
-                  [xFile, xFile, xFile],
                   subject: 'subject',
                   text: 'text',
                 );
