@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -46,16 +45,17 @@ class MyHomePage extends StatelessWidget {
                 //画像のパス。今回はAssets内の画像を使用します
                 const imagePath = 'assets/images/pentagon.png';
 
-                //画像のパスを元に、最終的にxFile型の変数を作ります
+                //画像のパスを元に、最終的にXFile型の変数を作ります
                 final byteData = await rootBundle.load(imagePath);
-                final buffer = byteData.buffer;
-                final uint8list =
-                    buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+                final uint8list = byteData.buffer.asUint8List(
+                  byteData.offsetInBytes,
+                  byteData.lengthInBytes,
+                );
                 final xFile = XFile.fromData(
                   uint8list,
                   mimeType: 'image/png',
                 );
-                
+
                 //実際に共有します
                 await Share.shareXFiles(
                   [xFile],
