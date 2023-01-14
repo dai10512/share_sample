@@ -35,11 +35,8 @@ class MyHomePage extends StatelessWidget {
             ElevatedButton(
               child: const Text('テキストシェア'),
               onPressed: () {
-                const defaultText = 'デフォルトテキスト';
-                const url = 'https://pentagon.tokyo/';
-
                 Share.share(
-                  '$defaultText \n $url',
+                  'テキスト',
                   subject: 'subject',
                 );
               },
@@ -71,16 +68,6 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget shareButton(
-    String text,
-    VoidCallback onPressed,
-  ) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: Text(text),
     );
   }
 }
